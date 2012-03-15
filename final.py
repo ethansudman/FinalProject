@@ -1,6 +1,6 @@
 from psim import PSim
 # Temporarily "borrow" other implementation
-from exampleImpl import *
+from DijkstraSingle import *
 
 def Parallel(V, E, w, s):
 	l = V.keys()
