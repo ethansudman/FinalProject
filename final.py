@@ -21,7 +21,9 @@ def Parallel(V, E, w, s):
 	if comm.rank==0:
 		for i in range(1, len(l)+1):
 			res = comm.recv(i)
-			print res
+			print ""
+			print "Start: " + str(l[i-1])
+			print "Path: " + str(res)
 
 
 G = {'s':{'u':10, 'x':5}, 'u':{'v':1, 'x':2}, 'v':{'y':4}, 'x':{'u':3, 'v':9, 'y':2}, 'y':{'s':7, 'v':6}}
