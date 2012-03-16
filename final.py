@@ -10,15 +10,19 @@ def Parallel(V, E, w, s):
 	# Note that there is an "extra" because the root process does NOT handle any work - it just scatters and gathers it.
 	comm = PSim(len(l) + 1)
 
+	# Scatter
 	if comm.rank==0:
+		# Loop through all of the processes 
 		for i in range(1, len(l)+1):
 			comm.send(i, l[i-1])
 	else:
 		curr = comm.recv(0)
-		res = Dijkstra(V, curr)
+		res = Dijkstra_p(V, curr)
 		comm.send(0, res)
 
+	# Gather
 	if comm.rank==0:
+		# Loop through all of the processes
 		for i in range(1, len(l)+1):
 			res = comm.recv(i)
 			print ""
