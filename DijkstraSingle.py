@@ -22,6 +22,10 @@ def Dijkstra(G,start,end=None):
 	
 	return (D,P)
 
+"""
+I haven't quite been able to get this working, but the idea is to parallelize the
+individual iterations of the Dijkstra algorithm too to increase the parallelization.
+"""
 def Dijkstra_p(G,start,end=None):
 	D = {}	# dictionary of final distances
 	P = {}	# dictionary of predecessors
@@ -34,8 +38,6 @@ def Dijkstra_p(G,start,end=None):
 		i = 1
 		for v in Q:
 			D[v] = Q[v]
-
-			print "D: " + str(D)
 
 			if v == end: break
 
