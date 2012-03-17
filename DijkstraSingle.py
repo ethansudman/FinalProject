@@ -3,8 +3,8 @@ from psim import PSim
 
 def Dijkstra(G,start,end=None):
 	Distances = {}
-	Predecessors = {}	# dictionary of predecessors
-	Q = priorityDictionary()   # est.dist. of non-final vert.
+	Predecessors = {}
+	Q = priorityDictionary()
 	Q[start] = 0
 	
 	for v in Q:
