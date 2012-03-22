@@ -66,6 +66,43 @@ def Dijkstra(graph, start):
 		heapify(Q)
 		vertex = heappop(Q)
 	return [(v.id,v.closest.id,v.closest_dist) for v in P if not v.id==start]
+
+def Dijkstra_pf(graph, start):
+	vertices, links = graph
+	P = [PrimVertex(i,links) for i in vertices]
+	Q = [P[i] for i in vertices if not i==start]
+	vertex = P[start]
+	vertex.closest_dist = 0
+
+	comm = PSim(len(vertices) + 1)
+
+	while Q:
+		i = 1
+		for neighbor_id,length in vertex.neighbors:
+			if comm.rank==0:
+				#comm.send(i, (neighbor_id, length))
+				comm.send(i, (P[neighbor_id], length))
+			else:
+				#nid,lth = comm.recv(0)
+				neighbor, lth = comm.recv(0)
+				dist = lth+vertex.closest_dist
+				if neighbor in Q and dist<neighbor.closest_dist:
+					neighbor.closest = vertex
+					neighbor.closest_dist = dist
+				comm.send(0, neighbor)
+
+			i = i + 1
+		heapify(Q)
+		vertex = heappop(Q)
+	if comm.rank==0:
+		toReturn = []
+		for i in range(1, len(vertices)):
+			pObj = comm.recv(i)
+			print str(pObj.id) + " " + str(pObj.closest)
+			toReturn.append(pObj)
+		return toReturn
+	else:
+		return None
 	
 def Dijkstra_p(graph, start):
 	vertices, links = graph
@@ -106,7 +143,9 @@ vertices = range(10)
 links = [(i,j,abs(math.sin(i+j+1))) for i in vertices for j in vertices]
 graph = [vertices,links]
 #normal = Dijkstra(graph, 0)
-parallel = Dijkstra_p(graph,0)
+parallel = Dijkstra_pf(graph,0)
+
+for v in parallel: print v
 
 #print "******************************************************************"
 #print "Parallel:"
