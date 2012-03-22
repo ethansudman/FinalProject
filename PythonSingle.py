@@ -80,29 +80,44 @@ def Dijkstra_pf(graph, start):
 		i = 1
 		for neighbor_id,length in vertex.neighbors:
 			if comm.rank==0:
-				#comm.send(i, (neighbor_id, length))
-				comm.send(i, (P[neighbor_id], length))
+				#comm.send(i, (P[neighbor_id], length))
+				comm.send(i, (neighbor_id, length))
 			else:
-				#nid,lth = comm.recv(0)
-				neighbor, lth = comm.recv(0)
+				#neighbor, length = comm.recv(0)
+				nid, lth = comm.recv(0)
+				neighbor=P[nid]
 				dist = lth+vertex.closest_dist
 				if neighbor in Q and dist<neighbor.closest_dist:
 					neighbor.closest = vertex
 					neighbor.closest_dist = dist
-				comm.send(0, neighbor)
+				comm.send(0, (nid, neighbor))
 
 			i = i + 1
+
+		if comm.rank==0:
+			l = []
+			# Gather the message from each iteration
+			for i in range(1, i):
+				nid, r = comm.recv(i)
+				l.append(r)
+				neighbor = P[nid]
+				if r.closest_dist < neighbor.closest_dist:
+					neighbor.closest = vertex
+					neighbor.closest_dist = r.closest_dist
 		heapify(Q)
 		vertex = heappop(Q)
-	if comm.rank==0:
+
+	#for v in P: print v.closest
+	return [(v.id,v.closest.id,v.closest_dist) for v in P if not v.id==start]
+	"""if comm.rank==0:
 		toReturn = []
 		for i in range(1, len(vertices)):
-			pObj = comm.recv(i)
-			print str(pObj.id) + " " + str(pObj.closest)
-			toReturn.append(pObj)
+			pObj, qID = comm.recv(i)
+			#print str(pObj.id) + " " + str(pObj.closest)
+			#toReturn.append(pObj)
 		return toReturn
 	else:
-		return None
+		return None"""
 	
 def Dijkstra_p(graph, start):
 	vertices, links = graph
