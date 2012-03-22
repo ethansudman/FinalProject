@@ -1,0 +1,10 @@
+c:\users\esudman\documents\visual studio 2010\Projects\Dijkstra\Dijkstra\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\esudman\documents\visual studio 2010\Projects\Dijkstra\Dijkstra\bin\Debug\Dijkstra.exe
+c:\users\esudman\documents\visual studio 2010\Projects\Dijkstra\Dijkstra\bin\Debug\Dijkstra.pdb
+c:\users\esudman\documents\visual studio 2010\Projects\Dijkstra\Dijkstra\obj\x86\Debug\Dijkstra.exe
+c:\users\esudman\documents\visual studio 2010\Projects\Dijkstra\Dijkstra\obj\x86\Debug\Dijkstra.pdb
+C:\Software\Dijkstra\Dijkstra\obj\x86\Debug\Dijkstra.exe
+C:\Software\Dijkstra\Dijkstra\obj\x86\Debug\Dijkstra.pdb
+C:\Software\Dijkstra\Dijkstra\bin\Debug\Dijkstra.exe
+C:\Software\Dijkstra\Dijkstra\bin\Debug\Dijkstra.pdb
+C:\Software\Dijkstra\Dijkstra\obj\x86\Debug\ResolveAssemblyReference.cache
